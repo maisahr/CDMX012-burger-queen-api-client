@@ -11,16 +11,15 @@ export const VerifyOrder = () => {
     const location = useLocation();
     const order = location.state.order;
 
-    // const reversedOrd = [...order.products].reverse();
-    // console.log(reversedOrd);
+    console.log(order);
 
-    // const filtered = reversedOrd.filter((value, index, self) => {
-    //     return self.findIndex(p => p.product === value.product) === index;
-    // });
-
-    // order.products = filtered.filter(product => product.qty > 0)
-
-
+    const modifyOrder = () => {
+        navigate('/orders', {
+            state: {
+                order
+            }
+        });
+    }
 
     const [total, setTotal] = useState('0')
 
@@ -31,15 +30,22 @@ export const VerifyOrder = () => {
         setTotal(sum);
     }, []);
 
-
-    //console.log(order);
+    /* useEffect(() => {
+        fetch('http://localhost:3333/orders')
+            .then((response) => {
+                return response.json()
+            })
+            .then((order) => {
+                
+            })
+    }, []) */
 
     const saveOrder = (order) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                id: "1025",
+                id: "10250",
                 userId: currentUser.uid,
                 table: order.client,
                 products: order.products,
@@ -50,6 +56,7 @@ export const VerifyOrder = () => {
         };
         fetch('http://localhost:3333/orders', requestOptions)
             .then(response => response.json())
+            .then(() => navigate('/'))
             .catch(res => console.log(res))
     }
 
@@ -57,7 +64,7 @@ export const VerifyOrder = () => {
         <div className="verify-order-container">
             <Header />
 
-            <button className="go-back" onClick={() => navigate('/orders')}>
+            <button className="go-back" onClick={() => modifyOrder()}>
                 <img src={arrow} alt="go back arrow" className="arrow"></img>
             </button>
 

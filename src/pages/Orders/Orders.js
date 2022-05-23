@@ -1,7 +1,7 @@
 import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import './Orders.css'
 import cart from '../../assets/Shopping Cart.png';
 import { Menu } from "../../components/Menus";
@@ -9,8 +9,9 @@ import { ErrorModal } from "../../components/ErrorModal/ErrorModal";
 
 export const Orders = () => {
 
-    let productsOrder = [];
+    const [productsOrder, setProductsOrder] = useState([])
 
+    const location = useLocation();
     const navigate = useNavigate();
 
     const [products, setProducts] = useState([])
@@ -51,16 +52,21 @@ export const Orders = () => {
 
     const breakfastMenu = () => {
         return (
-            <Menu products={products} btn={'dinnerBtn'} productsOrder={productsOrder} type={'breakfast'} name={'breakfastMenu'}>
+            <Menu products={products} btn={'dinnerBtn'} productsOrder={productsOrder} setProductsOrder={setProductsOrder} type={'breakfast'} name={'breakfastMenu'}>
             </Menu>
         );
     }
 
     const dinnerMenu = () => {
         return (
-            <Menu products={products} btn={'breakfastBtn'} productsOrder={productsOrder} type={'dinner'} name={'dinnerMenu'}>
+            <Menu products={products} btn={'breakfastBtn'} productsOrder={productsOrder} setProductsOrder={setProductsOrder} type={'dinner'} name={'dinnerMenu'}>
             </Menu>
         );
+    }
+
+    if(location.state !== null){
+        const received = location.state.order;
+        console.log(received)
     }
 
     return (
@@ -81,9 +87,7 @@ export const Orders = () => {
 
 
             <button className="verify-order-btn" onClick={() => {
-                console.log(order.products, 'aaaaaaaa')
                 const reversedOrd = [...order.products].reverse();
-                //console.log(reversedOrd);
 
                 const filtered = reversedOrd.filter((value, index, self) => {
                     return self.findIndex(p => p.product === value.product) === index;

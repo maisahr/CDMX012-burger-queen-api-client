@@ -4,14 +4,26 @@ import './ProductBox.css';
 export const ProductBox = (props) => {
     const [quantity, setQuantity] = useState(0);
 
-    if (quantity >= 0) {
-        console.log(props.array);
+    /* if (quantity >= 0) {
         props.array.push({
             qty: quantity,
             product: props.product,
             price: props.price
         })
-    };
+    }; */
+
+    if (quantity >= 0) {
+        const newProductsOrder = props.array.map(product => {
+            if(product.name === props.product.name){
+                return {...product, qty: quantity}
+            } else {
+                return product
+            }
+        })
+         props.setProductsOrder(newProductsOrder)
+    }    
+
+    console.log(props.array);
 
     return (
         <div className='productContainer'>
