@@ -3,9 +3,9 @@ import mealIcon from '../assets/meal.png'
 import { ProductBox } from "../components/ProductBox/ProductBox";
 
 export const Menu = (props) => {
-    const breakfast = props.products.filter(product => { return product.menu === props.type });
-    const beverages = breakfast.filter(product => { return product.type === 'beverage' });
-    const meal = breakfast.filter(product => { return product.type === 'meal' || product.type === 'side dish' || product.type === 'burger' });
+    const type = props.products.filter(product => { return product.menu === props.type });
+    const beverages = type.filter(product => { return product.type === 'beverage' });
+    const meal = type.filter(product => { return product.type === 'meal' || product.type === 'side dish' || product.type === 'burger' });
 
     return (
         <div className= {props.name}>

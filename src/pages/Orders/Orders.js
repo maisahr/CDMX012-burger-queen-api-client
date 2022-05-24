@@ -1,7 +1,7 @@
 import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import './Orders.css'
 import cart from '../../assets/Shopping Cart.png';
 import { Menu } from "../../components/Menus";
@@ -12,6 +12,7 @@ export const Orders = () => {
     //let productsOrder = [];
     const [productsOrder, setProductsOrder] = useState([])
 
+    const location = useLocation();
     const navigate = useNavigate();
 
     const [products, setProducts] = useState([])
@@ -76,6 +77,11 @@ export const Orders = () => {
         );
     }
 
+    if(location.state !== null){
+        const received = location.state.order;
+        console.log(received)
+    }
+
     return (
         <>
             <Header />
@@ -97,7 +103,6 @@ export const Orders = () => {
                 let order = { products: productsOrder, client: table };
                 console.log(order.products, 'aaaaaaaa')
                 const reversedOrd = [...order.products].reverse();
-                //console.log(reversedOrd);
 
                 const filtered = reversedOrd.filter((value, index, self) => {
                     return self.findIndex(p => p.product === value.product) === index;
