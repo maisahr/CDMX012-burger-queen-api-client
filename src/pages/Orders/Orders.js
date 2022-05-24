@@ -9,7 +9,8 @@ import { ErrorModal } from "../../components/ErrorModal/ErrorModal";
 
 export const Orders = () => {
 
-    let productsOrder = [];
+    //let productsOrder = [];
+    const [productsOrder, setProductsOrder] = useState([])
 
     const navigate = useNavigate();
 
@@ -47,19 +48,31 @@ export const Orders = () => {
             console.log(values)
         }, [values.table, values.products]) */
 
-    let order = { products: productsOrder, client: table };
+    
 
     const breakfastMenu = () => {
         return (
-            <Menu products={products} btn={'dinnerBtn'} productsOrder={productsOrder} type={'breakfast'} name={'breakfastMenu'}>
-            </Menu>
+            <Menu
+                products={products}
+                btn={'dinnerBtn'}
+                productsOrder={productsOrder}
+                type={'breakfast'}
+                name={'breakfastMenu'}
+                setProductsOrder={setProductsOrder}
+            />
         );
     }
 
     const dinnerMenu = () => {
         return (
-            <Menu products={products} btn={'breakfastBtn'} productsOrder={productsOrder} type={'dinner'} name={'dinnerMenu'}>
-            </Menu>
+            <Menu
+                products={products}
+                btn={'breakfastBtn'}
+                productsOrder={productsOrder}
+                type={'dinner'}
+                name={'dinnerMenu'}
+                setProductsOrder={setProductsOrder}
+            />
         );
     }
 
@@ -81,6 +94,7 @@ export const Orders = () => {
 
 
             <button className="verify-order-btn" onClick={() => {
+                let order = { products: productsOrder, client: table };
                 console.log(order.products, 'aaaaaaaa')
                 const reversedOrd = [...order.products].reverse();
                 //console.log(reversedOrd);
